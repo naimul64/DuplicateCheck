@@ -1,6 +1,9 @@
 import configparser
 import MySQLdb
 import sys
+import os
+import csv
+import datetime
 
 schema_4_intermediate_table1 = ''
 schoolwise_cnt_tbl1 = ''
@@ -144,16 +147,15 @@ def create_same_cnt_table(db_con):
 def first_db_school_code_fetch(db_con):
     cursor = db_con.cursor()
     schoolCodeCollectQuery = "Select distinct school_code from %s.%s" % (
-    schema_4_intermediate_table1, schoolwise_cnt_tbl1)
+        schema_4_intermediate_table1, schoolwise_cnt_tbl1)
     cursor.execute(schoolCodeCollectQuery)
     result = cursor.fetchall()
-    print "School codes fetched."
     school_code_list = []
     for row in result:
         if row[0] is not None:
             school_code_list.append(row[0])
+    print "School codes fetched."
     return school_code_list
-
 
 
 def perform_duplicate_check_and_insert_in_db(db_con, schoolCode_list, school_rowCntMap1, school_rowCntMap2):
@@ -175,36 +177,74 @@ def perform_duplicate_check_and_insert_in_db(db_con, schoolCode_list, school_row
             AND substring(ds1.mobile_no, 1,3) in ('015','016','017','018','019')
             AND length(ds2.mobile_no) = 11 AND cast(ds2.mobile_no as unsigned) != 0
             AND substring(ds2.mobile_no, 1,3) in ('015','016','017','018','019')
-                AND ds1.school_code != '%s'
+                AND ds1.school_code = '%s'
+                AND ds2.school_code != '%s'
             GROUP BY ds1.school_code , ds2.school_code
-        """ % (schema_of_main_table1, main_table1, schema_of_main_table2, main_table2,school_code)
+        """ % (schema_of_main_table1, main_table1, schema_of_main_table2, main_table2, school_code, school_code)
         cursor.execute(query)
         results = cursor.fetchall()
-
+        queryNow = ""
         for rownow in results:
-            queryNow = """
-             INSERT INTO sameMobieNoCountBetweenDssheetRecvddata (
-             school_code1,
-            school_code2,
-            row_count1,
-            row_count2,
-            same_mobile_no_count)
-              VALUES
-              (\"""" + rownow[0] + """\",\""""+ rownow[1] +"""\",""" + str(school_rowCntMap1[rownow[0]]) + """,""" + str(school_rowCntMap2[rownow[1]]) +\
-                   ""","""+ str(rownow[2]) +""")
-         """
-        cursor.execute(queryNow)
+            try:
+                queryNow = """
+                 INSERT INTO %s.%s (
+                 school_code1,
+                school_code2,
+                row_count1,
+                row_count2,
+                same_mobile_no_count)
+                  VALUES
+                  ("%s","%s",%d,%d,%d)
+                """ % (same_cnt_table_schema, same_cnt_table, rownow[0], rownow[1], school_rowCntMap1[rownow[0]],
+                       school_rowCntMap2[rownow[1]], rownow[2])
+
+                cursor.execute(queryNow)
+            except Exception as e:
+                print e
+                print queryNow
+
+            sys.stdout.write("\rDone " + str(count) + " of " + str(total) + " schools.")
+            sys.stdout.flush()
+            if (count % 1000 == 0):
+                db_con.commit()
         count += 1
-        sys.stdout.write("\rDone " + str(count) + " of " + str(total) + " schools.")
-        sys.stdout.flush()
-        if (count % 1000 == 0):
-            db_con.commit()
-    print "finished. Check %s.%s table" %(same_cnt_table_schema,same_cnt_table)
+    print "finished. Check %s.%s table" % (same_cnt_table_schema, same_cnt_table)
+
+
+def export(db_con):
+    cursor = db_con.cursor()
+    query = """
+        SELECT
+          sm.*,
+          ct1.distinctMobCount dist_mobile_1,
+          ct2.distinctMobCount dist_mobile_2
+        FROM bugs.sameCntTable sm
+          INNER JOIN bugs.schoolwiseCount1 ct1 ON sm.school_code1 = ct1.school_code
+          INNER JOIN bugs.schoolwiseCount2 ct2 ON sm.school_code2 = ct2.school_code
+    """
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    description = cursor.description
+    header = ()
+    for desc in description:
+        header= header+(desc[0],)
+    cursor.close()
+    if not os.path.exists('export'):
+        os.makedirs('export')
+    now = datetime.datetime.now().strftime("%y%m%d%H%M")
+    fp = open(os.path.join('export','duplicateList' + str(now) + '.csv'), 'wb')
+    myFile = csv.writer(fp)
+    myFile.writerow(header)
+    myFile.writerows(rows)
+    fp.close()
+
+    print "\nExported to CSV."
+
 
 def Main():
     db_con = get_db_connection()
     set_schema_table_variables()
-    # create_intermediate_tables(db_con=db_con)
+    create_intermediate_tables(db_con=db_con)
     schoolCode_rowCnt_map1 = get_schoolCode_rowCnt_map1(db_con=db_con)
     schoolCode_rowCnt_map2 = get_schoolCode_rowCnt_map2(db_con=db_con)
     create_same_cnt_table(db_con=db_con)
@@ -213,6 +253,7 @@ def Main():
                                              schoolCode_list=school_code_list,
                                              school_rowCntMap1=schoolCode_rowCnt_map1,
                                              school_rowCntMap2=schoolCode_rowCnt_map2)
+    export(db_con=db_con)
 
 
 Main()
