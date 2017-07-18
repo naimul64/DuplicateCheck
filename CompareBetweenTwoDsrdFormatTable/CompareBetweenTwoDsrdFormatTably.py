@@ -218,21 +218,22 @@ def export(db_con):
           sm.*,
           ct1.distinctMobCount dist_mobile_1,
           ct2.distinctMobCount dist_mobile_2
-        FROM bugs.sameCntTable sm
-          INNER JOIN bugs.schoolwiseCount1 ct1 ON sm.school_code1 = ct1.school_code
-          INNER JOIN bugs.schoolwiseCount2 ct2 ON sm.school_code2 = ct2.school_code
-    """
+        FROM %s.%s sm
+          LEFT JOIN %s.%s ct1 ON sm.school_code1 = ct1.school_code
+          LEFT JOIN %s.%s ct2 ON sm.school_code2 = ct2.school_code
+    """ % (same_cnt_table_schema, same_cnt_table, schema_4_intermediate_table1, schoolwise_cnt_tbl1,
+           schema_4_intermediate_table2, schoolwise_cnt_tbl2)
     cursor.execute(query)
     rows = cursor.fetchall()
     description = cursor.description
     header = ()
     for desc in description:
-        header= header+(desc[0],)
+        header = header + (desc[0],)
     cursor.close()
     if not os.path.exists('export'):
         os.makedirs('export')
     now = datetime.datetime.now().strftime("%y%m%d%H%M")
-    fp = open(os.path.join('export','duplicateList' + str(now) + '.csv'), 'wb')
+    fp = open(os.path.join('export', 'duplicateList' + str(now) + '.csv'), 'wb')
     myFile = csv.writer(fp)
     myFile.writerow(header)
     myFile.writerows(rows)

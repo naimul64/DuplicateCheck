@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="932d6687-897c-47e6-9c2e-ea8f8244ba71" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/config.ini" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py" afterPath="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sameMobileCountBetweenSchool.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -17,7 +17,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/sameMobileCountBetweenSchool$CompareBetweenTwoDsrdFormatTably.coverage" NAME="CompareBetweenTwoDsrdFormatTably Coverage Results" MODIFIED="1500378355636" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable" />
+    <SUITE FILE_PATH="coverage/sameMobileCountBetweenSchool$CompareBetweenTwoDsrdFormatTably.coverage" NAME="CompareBetweenTwoDsrdFormatTably Coverage Results" MODIFIED="1500382065573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -32,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/config.ini">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="12" />
+              <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -41,35 +41,65 @@
       <file leaf-file-name="CompareBetweenTwoDsrdFormatTably.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33268481">
-              <caret line="180" column="0" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
+            <state vertical-scroll-proportion="1.3091247">
+              <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1500378355630" expanded="true" signature="2336:2360" placeholder="drop table i..." />
-                <marker date="1500378355630" expanded="true" signature="2470:2486" placeholder="create table..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="2497:2627" placeholder="Select schoo..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="2778:2847" placeholder="ALTER TABLE missing_value.missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="3028:3052" placeholder="drop table i..." />
-                <marker date="1500378355630" expanded="true" signature="3162:3178" placeholder="create table..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="3189:3319" placeholder="Select schoo..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="3470:3539" placeholder="ALTER TABLE missing_value.missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="3714:3751" placeholder="select schoo..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="4058:4095" placeholder="select schoo..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="4399:4423" placeholder="DROP TABLE I..." />
-                <marker date="1500378355630" expanded="true" signature="4560:4764" placeholder="CREATE TABLE..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="5013:5049" placeholder="Select disti..missing_value..." />
-                <marker date="1500378355630" expanded="true" signature="6559:6971" placeholder="INSERT INTO ..." />
+                <marker date="1500382264686" expanded="true" signature="2373:2397" placeholder="drop table i..." />
+                <marker date="1500382264686" expanded="true" signature="2507:2523" placeholder="create table..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="2534:2664" placeholder="Select schoo..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="2815:2884" placeholder="ALTER TABLE missing_value.missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="3065:3089" placeholder="drop table i..." />
+                <marker date="1500382264686" expanded="true" signature="3199:3215" placeholder="create table..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="3226:3356" placeholder="Select schoo..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="3507:3576" placeholder="ALTER TABLE missing_value.missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="3751:3788" placeholder="select schoo..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="4095:4132" placeholder="select schoo..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="4436:4460" placeholder="DROP TABLE I..." />
+                <marker date="1500382264686" expanded="true" signature="4597:4801" placeholder="CREATE TABLE..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="5050:5086" placeholder="Select disti..missing_value..." />
+                <marker date="1500382264686" expanded="true" signature="6702:6921" placeholder="INSERT INTO ..." />
+                <marker date="1500382264686" expanded="true" signature="6702:6940" placeholder="INSERT INTO ..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="connections.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/lib/python2.7/dist-packages/MySQLdb/connections.py">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+              <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main_duplicateCheckWithAutoExport.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/particularThanaCheck/Main_duplicateCheckWithAutoExport.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="246" column="56" selection-start-line="246" selection-start-column="4" selection-end-line="246" selection-end-column="56" />
+              <folding>
+                <marker date="1495020279475" expanded="true" signature="935:1041" placeholder="DELETE FROM ..." />
+                <marker date="1495020279475" expanded="true" signature="1190:1506" placeholder="INSERT INTO ..." />
+                <marker date="1495020279475" expanded="true" signature="1239:1506" placeholder="SELECT rd.sc..receiveddata..." />
+                <marker date="1495020279475" expanded="true" signature="1764:1877" placeholder="DELETE FROM ..." />
+                <marker date="1495020279475" expanded="true" signature="2018:2357" placeholder="INSERT INTO ..." />
+                <marker date="1495020279475" expanded="true" signature="2066:2357" placeholder="SELECT ds.sc..disbursement_sheet_raw_data_report..." />
+                <marker date="1495020279475" expanded="true" signature="2613:2741" placeholder="DELETE FROM ..." />
+                <marker date="1495020279475" expanded="true" signature="2900:2958" placeholder="INSERT INTO ..." />
+                <marker date="1495020279475" expanded="true" signature="2967:3791" placeholder="SELECT t1.sc..School_code..." />
+                <marker date="1495020279475" expanded="true" signature="3072:3304" placeholder="SELECT Schoo..receiveddata..." />
+                <marker date="1495020279475" expanded="true" signature="3457:3671" placeholder="SELECT schoo..receiveddata..." />
+                <marker date="1495020279475" expanded="true" signature="4053:4170" placeholder="DELETE FROM ..." />
+                <marker date="1495020279475" expanded="true" signature="4337:4388" placeholder="ALTER TABLE bugs.schoolRowCountDsSheet_intermediate..." />
+                <marker date="1495020279475" expanded="true" signature="4519:4923" placeholder="INSERT INTO ..." />
+                <marker date="1495020279475" expanded="true" signature="4575:4923" placeholder="Select schoo..disbursement_sheet_raw_data_report..." />
+                <marker date="1495020279475" expanded="true" signature="4749:4897" placeholder="SELECT schoo..school..." />
+                <marker date="1495020279475" expanded="true" signature="4977:5074" placeholder="ALTER TABLE bugs.schoolRowCountDsSheet_intermediate..." />
+                <marker date="1495020279475" expanded="true" signature="5313:5426" placeholder="SELECT schoo..school..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,6 +114,7 @@
       <list>
         <option value="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/config.ini" />
         <option value="$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -139,52 +170,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sameMobileCountBetweenSchool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sameMobileCountBetweenSchool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sameMobileCountBetweenSchool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="particularThanaCheck" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sameMobileCountBetweenSchool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sameMobileCountBetweenSchool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="particularThanaCheck" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="0.0.0_firstStep" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sameMobileCountBetweenSchool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sameMobileCountBetweenSchool" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CompareBetweenTwoDsrdFormatTable" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -420,7 +405,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1365" y="0" width="1922" height="1081" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -428,12 +413,12 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32932165" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39934355" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39934355" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -443,6 +428,14 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -451,31 +444,39 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py</url>
-          <line>87</line>
+          <line>90</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py</url>
-          <line>72</line>
+          <line>75</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py</url>
-          <line>159</line>
+          <line>161</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py</url>
-          <line>154</line>
+          <line>157</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py</url>
-          <line>180</line>
-          <option name="timeStamp" value="14" />
+          <line>206</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py</url>
+          <line>214</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="15" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="20" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -511,14 +512,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/lib/python2.7/dist-packages/MySQLdb/connections.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -527,26 +520,81 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/particularThanaCheck/Main_duplicateCheckWithAutoExport.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="246" column="56" selection-start-line="246" selection-start-column="4" selection-end-line="246" selection-end-column="56" />
+          <folding>
+            <marker date="1495020279475" expanded="true" signature="935:1041" placeholder="DELETE FROM ..." />
+            <marker date="1495020279475" expanded="true" signature="1190:1506" placeholder="INSERT INTO ..." />
+            <marker date="1495020279475" expanded="true" signature="1239:1506" placeholder="SELECT rd.sc..receiveddata..." />
+            <marker date="1495020279475" expanded="true" signature="1764:1877" placeholder="DELETE FROM ..." />
+            <marker date="1495020279475" expanded="true" signature="2018:2357" placeholder="INSERT INTO ..." />
+            <marker date="1495020279475" expanded="true" signature="2066:2357" placeholder="SELECT ds.sc..disbursement_sheet_raw_data_report..." />
+            <marker date="1495020279475" expanded="true" signature="2613:2741" placeholder="DELETE FROM ..." />
+            <marker date="1495020279475" expanded="true" signature="2900:2958" placeholder="INSERT INTO ..." />
+            <marker date="1495020279475" expanded="true" signature="2967:3791" placeholder="SELECT t1.sc..School_code..." />
+            <marker date="1495020279475" expanded="true" signature="3072:3304" placeholder="SELECT Schoo..receiveddata..." />
+            <marker date="1495020279475" expanded="true" signature="3457:3671" placeholder="SELECT schoo..receiveddata..." />
+            <marker date="1495020279475" expanded="true" signature="4053:4170" placeholder="DELETE FROM ..." />
+            <marker date="1495020279475" expanded="true" signature="4337:4388" placeholder="ALTER TABLE bugs.schoolRowCountDsSheet_intermediate..." />
+            <marker date="1495020279475" expanded="true" signature="4519:4923" placeholder="INSERT INTO ..." />
+            <marker date="1495020279475" expanded="true" signature="4575:4923" placeholder="Select schoo..disbursement_sheet_raw_data_report..." />
+            <marker date="1495020279475" expanded="true" signature="4749:4897" placeholder="SELECT schoo..school..." />
+            <marker date="1495020279475" expanded="true" signature="4977:5074" placeholder="ALTER TABLE bugs.schoolRowCountDsSheet_intermediate..." />
+            <marker date="1495020279475" expanded="true" signature="5313:5426" placeholder="SELECT schoo..school..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/export/duplicateList1707181848.csv">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CompareBetweenTwoDsrdFormatTable/CompareBetweenTwoDsrdFormatTably.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33268481">
-          <caret line="180" column="0" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.3091247">
+          <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1500378355630" expanded="true" signature="2336:2360" placeholder="drop table i..." />
-            <marker date="1500378355630" expanded="true" signature="2470:2486" placeholder="create table..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="2497:2627" placeholder="Select schoo..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="2778:2847" placeholder="ALTER TABLE missing_value.missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="3028:3052" placeholder="drop table i..." />
-            <marker date="1500378355630" expanded="true" signature="3162:3178" placeholder="create table..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="3189:3319" placeholder="Select schoo..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="3470:3539" placeholder="ALTER TABLE missing_value.missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="3714:3751" placeholder="select schoo..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="4058:4095" placeholder="select schoo..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="4399:4423" placeholder="DROP TABLE I..." />
-            <marker date="1500378355630" expanded="true" signature="4560:4764" placeholder="CREATE TABLE..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="5013:5049" placeholder="Select disti..missing_value..." />
-            <marker date="1500378355630" expanded="true" signature="6559:6971" placeholder="INSERT INTO ..." />
+            <marker date="1500382264686" expanded="true" signature="2373:2397" placeholder="drop table i..." />
+            <marker date="1500382264686" expanded="true" signature="2507:2523" placeholder="create table..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="2534:2664" placeholder="Select schoo..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="2815:2884" placeholder="ALTER TABLE missing_value.missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="3065:3089" placeholder="drop table i..." />
+            <marker date="1500382264686" expanded="true" signature="3199:3215" placeholder="create table..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="3226:3356" placeholder="Select schoo..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="3507:3576" placeholder="ALTER TABLE missing_value.missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="3751:3788" placeholder="select schoo..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="4095:4132" placeholder="select schoo..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="4436:4460" placeholder="DROP TABLE I..." />
+            <marker date="1500382264686" expanded="true" signature="4597:4801" placeholder="CREATE TABLE..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="5050:5086" placeholder="Select disti..missing_value..." />
+            <marker date="1500382264686" expanded="true" signature="6702:6921" placeholder="INSERT INTO ..." />
+            <marker date="1500382264686" expanded="true" signature="6702:6940" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
