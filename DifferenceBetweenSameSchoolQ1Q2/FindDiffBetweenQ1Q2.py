@@ -2,6 +2,9 @@ __author__ = 'insan'
 
 import MySQLdb
 import sys
+import os
+import csv
+import datetime
 
 import configparser
 
@@ -12,23 +15,22 @@ def perform_duplicate_check_and_insert_in_db(db_con, schoolCode_list, school_row
     total = len(schoolCode_list)
     for school_code in schoolCode_list:
         query = """
-            SELECT
-                ds1.school_code,
-                ds2.school_code,
-                COUNT(*) same_mobile_cnt
-            FROM
-                %s.%s ds1
-                    INNER JOIN
-                %s.%s ds2 ON ds1.mobile_no = ds2.mobile_no
-            WHERE
-            length(ds1.mobile_no) = 11 AND cast(ds1.mobile_no as unsigned) != 0
-            AND substring(ds1.mobile_no, 1,3) in ('015','016','017','018','019')
-            AND length(ds2.mobile_no) = 11 AND cast(ds2.mobile_no as unsigned) != 0
-            AND substring(ds2.mobile_no, 1,3) in ('015','016','017','018','019')
-                AND ds1.school_code = '%s'
-                AND ds2.school_code != '%s'
-            GROUP BY ds1.school_code , ds2.school_code
-        """ % (schema_of_main_table1, main_table1, schema_of_main_table2, main_table2, school_code, school_code)
+                SELECT
+                  ds1.school_code,
+                  COUNT(*) same_mobile_cnt
+                FROM
+                  (SELECT DISTINCT mobile_no, school_code FROM %s.%s WHERE school_code = '%s') ds1
+                  INNER JOIN
+                  (SELECT DISTINCT mobile_no, school_code FROM %s.%s WHERE school_code = '%s') ds2
+                    ON ds1.school_code = ds2.school_code AND ds1.mobile_no = ds2.mobile_no
+                WHERE
+                  ds1.mobile_no IS NOT NULL
+                  AND length(ds1.mobile_no) = 11 AND cast(ds1.mobile_no AS UNSIGNED) != 0
+                  AND substring(ds1.mobile_no, 1, 3) IN ('015', '016', '017', '018', '019')
+                  AND length(ds2.mobile_no) = 11 AND cast(ds2.mobile_no AS UNSIGNED) != 0
+                  AND substring(ds2.mobile_no, 1, 3) IN ('015', '016', '017', '018', '019')
+                GROUP BY ds1.school_code, ds2.school_code
+        """ % (schema_of_main_table1, main_table1, school_code, schema_of_main_table2, main_table2, school_code)
         cursor.execute(query)
         results = cursor.fetchall()
         queryNow = ""
@@ -36,15 +38,14 @@ def perform_duplicate_check_and_insert_in_db(db_con, schoolCode_list, school_row
             try:
                 queryNow = """
                  INSERT INTO %s.%s (
-                 school_code1,
-                school_code2,
+                 school_code,
                 row_count1,
                 row_count2,
                 same_mobile_no_count)
                   VALUES
-                  ("%s","%s",%d,%d,%d)
-                """ % (same_cnt_table_schema, same_cnt_table, rownow[0], rownow[1], school_rowCntMap1[rownow[0]],
-                       school_rowCntMap2[rownow[1]], rownow[2])
+                  ("%s",%d,%d,%d)
+                """ % (same_cnt_table_schema, same_cnt_table, rownow[0], school_rowCntMap1[rownow[0]],
+                       school_rowCntMap2[rownow[0]], rownow[1])
 
                 cursor.execute(queryNow)
             except Exception as e:
@@ -81,8 +82,7 @@ def create_same_cnt_table(db_con):
 
     tableCreateQuery = """
         CREATE TABLE %s.%s (
-        school_code1 VARCHAR(13) NOT NULL,
-        school_code2 VARCHAR(13) NOT NULL,
+        school_code VARCHAR(13) NOT NULL,
         row_count1 INT (5),
         row_count2 INT (5),
         same_mobile_no_count INT(5) NULL)
@@ -200,10 +200,48 @@ def get_db_connection():
                            config.get(section, 'db_schema'))
 
 
+def export(db_con):
+    cursor = db_con.cursor()
+    query = """
+        SELECT
+          sm.*,
+          sc1.distinctMobCount disMob1,
+          sc2.distinctMobCount disMob2,
+          100 * sm.same_mobile_no_count / sc1.distinctMobCount percentage1,
+          100 * sm.same_mobile_no_count / sc2.distinctMobCount percnetage2
+        FROM %s.%s sm
+          INNER JOIN %s.%s sc1 ON sm.school_code = sc1.school_code
+          INNER JOIN %s.%s sc2 ON sm.school_code = sc2.school_code
+        WHERE 100 * sm.same_mobile_no_count / sc1.distinctMobCount < 80
+              OR 100 * sm.same_mobile_no_count / sc2.distinctMobCount < 80
+
+        ORDER BY percentage1, percnetage2
+    """ % (same_cnt_table_schema, same_cnt_table, schema_4_intermediate_table1, schoolwise_cnt_tbl1,
+           schema_4_intermediate_table2, schoolwise_cnt_tbl2)
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    description = cursor.description
+    header = ()
+    for desc in description:
+        header = header + (desc[0],)
+    cursor.close()
+    if not os.path.exists('export'):
+        os.makedirs('export')
+    now = datetime.datetime.now().strftime("%y%m%d%H%M")
+    fp = open(os.path.join('export', 'duplicateList' + str(now) + '.csv'), 'wb')
+    myFile = csv.writer(fp)
+    myFile.writerow(header)
+    myFile.writerows(rows)
+    fp.close()
+
+    print "\nExported to CSV."
+
+
 def Main():
+    start_time = datetime.datetime.now()
     db_con = get_db_connection()
     set_schema_table_variables()
-    # create_intermediate_tables(db_con=db_con)
+    create_intermediate_tables(db_con=db_con)
     schoolCode_rowCnt_map1 = get_schoolCode_rowCnt_map1(db_con=db_con)
     schoolCode_rowCnt_map2 = get_schoolCode_rowCnt_map2(db_con=db_con)
     create_same_cnt_table(db_con=db_con)
@@ -212,8 +250,9 @@ def Main():
                                              schoolCode_list=school_code_list,
                                              school_rowCntMap1=schoolCode_rowCnt_map1,
                                              school_rowCntMap2=schoolCode_rowCnt_map2)
-
-    print "Intermediate tables done"
+    export(db_con=db_con)
+    end_time = datetime.datetime.now()
+    print "Total process took time: " + str(end_time - start_time)
 
 
 Main()
