@@ -1,9 +1,10 @@
 # import mysql.connector
-import sys
 import csv
-import requests
 import json
 from datetime import datetime
+
+import requests
+
 
 def getRawDataFromAPI(school_code, file_name):
     url = "http://icr.surecash.net:8080/icr-server/ds/beneficiary"
