@@ -1,9 +1,10 @@
-import configparser
 import MySQLdb
 import sys
 import os
 import csv
 import datetime
+
+import configparser
 
 schema_4_intermediate_table1 = ''
 schoolwise_cnt_tbl1 = ''
@@ -173,7 +174,8 @@ def perform_duplicate_check_and_insert_in_db(db_con, schoolCode_list, school_row
                     INNER JOIN
                 %s.%s ds2 ON ds1.mobile_no = ds2.mobile_no
             WHERE
-            length(ds1.mobile_no) = 11 AND cast(ds1.mobile_no as unsigned) != 0
+            ds1.mobile_no IS NOT NULL
+            AND length(ds1.mobile_no) = 11 AND cast(ds1.mobile_no as unsigned) != 0
             AND substring(ds1.mobile_no, 1,3) in ('015','016','017','018','019')
             AND length(ds2.mobile_no) = 11 AND cast(ds2.mobile_no as unsigned) != 0
             AND substring(ds2.mobile_no, 1,3) in ('015','016','017','018','019')
