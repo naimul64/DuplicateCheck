@@ -1,0 +1,259 @@
+__author__ = 'insan'
+
+import MySQLdb
+import sys
+import os
+import csv
+import datetime
+
+import configparser
+
+
+def perform_duplicate_check_and_insert_in_db(db_con, schoolCode_list, school_rowCntMap1, school_rowCntMap2):
+    cursor = db_con.cursor()
+    count = 0
+    total = len(schoolCode_list)
+    for school_code in schoolCode_list:
+        query = """
+                SELECT
+                  dsrd.school_code,
+                  COUNT(*) same_mobile_cnt
+                FROM
+                  (SELECT DISTINCT mobile_no, school_code FROM %s.%s WHERE school_code = '%s') dsrd
+                  INNER JOIN
+                  (SELECT DISTINCT mobile_number, school_code FROM %s.%s WHERE school_code = '%s') stpndInfo
+                    ON dsrd.school_code = stpndInfo.school_code AND dsrd.mobile_no = stpndInfo.mobile_number
+                WHERE
+                  dsrd.mobile_no IS NOT NULL
+                  AND length(dsrd.mobile_no) = 11 AND cast(dsrd.mobile_no AS UNSIGNED) != 0
+                  AND substring(dsrd.mobile_no, 1, 3) IN ('015', '016', '017', '018', '019')
+                  AND length(stpndInfo.mobile_number) = 11 AND cast(stpndInfo.mobile_number AS UNSIGNED) != 0
+                  AND substring(stpndInfo.mobile_number, 1, 3) IN ('015', '016', '017', '018', '019')
+                GROUP BY dsrd.school_code, stpndInfo.school_code
+        """ % (schema_of_main_table1, main_table1, school_code, schema_of_main_table2, main_table2, school_code)
+        cursor.execute(query)
+        results = cursor.fetchall()
+        queryNow = ""
+        for rownow in results:
+            try:
+                queryNow = """
+                 INSERT INTO %s.%s (
+                 school_code,
+                row_count1,
+                row_count2,
+                same_mobile_no_count)
+                  VALUES
+                  ("%s",%d,%d,%d)
+                """ % (same_cnt_table_schema, same_cnt_table, rownow[0], school_rowCntMap1[rownow[0]],
+                       school_rowCntMap2[rownow[0]], rownow[1])
+
+                cursor.execute(queryNow)
+            except Exception as e:
+                print e
+                print queryNow
+
+            sys.stdout.write("\rDone " + str(count) + " of " + str(total) + " schools.")
+            sys.stdout.flush()
+            if (count % 1000 == 0):
+                db_con.commit()
+        count += 1
+    print "finished. Check %s.%s table" % (same_cnt_table_schema, same_cnt_table)
+
+
+def first_db_school_code_fetch(db_con):
+    cursor = db_con.cursor()
+    schoolCodeCollectQuery = "Select distinct school_code from %s.%s" % (
+        schema_4_intermediate_table1, schoolwise_cnt_tbl_dsrd)
+    cursor.execute(schoolCodeCollectQuery)
+    result = cursor.fetchall()
+    school_code_list = []
+    for row in result:
+        if row[0] is not None:
+            school_code_list.append(row[0])
+    print "School codes fetched."
+    return school_code_list
+
+
+def create_same_cnt_table(db_con):
+    cursor = db_con.cursor()
+    tableDropQuery = "DROP TABLE IF EXISTS %s.%s" % (same_cnt_table_schema, same_cnt_table)
+    cursor.execute(tableDropQuery)
+    db_con.commit()
+
+    tableCreateQuery = """
+        CREATE TABLE %s.%s (
+        school_code VARCHAR(13) NOT NULL,
+        row_count1 INT (5),
+        row_count2 INT (5),
+        same_mobile_no_count INT(5) NULL)
+    """ % (same_cnt_table_schema, same_cnt_table)
+    cursor.execute(tableCreateQuery)
+    db_con.commit()
+    print "Same count table re-created"
+
+
+def get_schoolCode_rowCnt_map1(db_con):
+    cursor = db_con.cursor()
+    cursor.execute("select school_code, rowCount from %s.%s" % (schema_4_intermediate_table1, schoolwise_cnt_tbl_dsrd))
+    dsResult = cursor.fetchall()
+    school_rowCnt_map = {}
+    for dsr in dsResult:
+        school_rowCnt_map[dsr[0]] = dsr[1]
+    return school_rowCnt_map
+
+
+def get_schoolCode_rowCnt_map2(db_con):
+    cursor = db_con.cursor()
+    cursor.execute(
+        "select school_code, rowCount from %s.%s" % (schema_4_intermediate_table2, schoolwise_cnt_tbl_stipendInfo))
+    rdResult = cursor.fetchall()
+    school_rowCnt_map = {}
+    for rdr in rdResult:
+        school_rowCnt_map[rdr[0]] = rdr[1]
+    return school_rowCnt_map
+
+
+def create_dsrd_intermediate_table(db_con):
+    cursor = db_con.cursor()
+    cursor.execute("drop table if exists %s.%s" % (schema_4_intermediate_table1, schoolwise_cnt_tbl_dsrd))
+    db_con.commit()
+    cursor.execute("""
+        create table %s.%s
+        Select school_code , count(*) rowCount, count(distinct mobile_no) distinctMobCount
+        from %s.%s
+        group by school_code
+    """ % (schema_4_intermediate_table1, schoolwise_cnt_tbl_dsrd, schema_of_main_table1, main_table1))
+    db_con.commit()
+    cursor.execute("""
+        ALTER TABLE %s.%s
+        ADD INDEX `school_code` (`School_code` ASC)
+    """ % (schema_4_intermediate_table1, schoolwise_cnt_tbl_dsrd))
+    db_con.commit()
+
+
+def create_stipendInfo_intermediate_table(db_con):
+    cursor = db_con.cursor()
+    cursor.execute("drop table if exists %s.%s" % (schema_4_intermediate_table2, schoolwise_cnt_tbl_stipendInfo))
+    db_con.commit()
+    cursor.execute("""
+        create table %s.%s
+        Select school_code , count(*) rowCount, count(distinct mobile_number) distinctMobCount
+        from %s.%s
+        group by school_code
+    """ % (schema_4_intermediate_table2, schoolwise_cnt_tbl_stipendInfo, schema_of_main_table2, main_table2))
+    db_con.commit()
+    cursor.execute("""
+        ALTER TABLE %s.%s
+        ADD INDEX `school_code` (`School_code` ASC)
+    """ % (schema_4_intermediate_table2, schoolwise_cnt_tbl_stipendInfo))
+    db_con.commit()
+
+
+def create_intermediate_tables(db_con):
+    print "Creating intermediate table 1. Please wait for sometime."
+    create_dsrd_intermediate_table(db_con)
+    print "Intermediate table 1 done."
+    print "Creating intermediate table 2. Please wait for sometime."
+    create_stipendInfo_intermediate_table(db_con)
+    print "Intermediate table 2 done."
+
+
+def set_schema_table_variables():
+    config = get_reader()
+
+    global schema_of_main_table1
+    schema_of_main_table1 = config.get('DB_SCHEMA_TABLE', 'schema1')
+    global main_table1
+    main_table1 = config.get('DB_SCHEMA_TABLE', 'table1')
+    global schema_of_main_table2
+    schema_of_main_table2 = config.get('DB_SCHEMA_TABLE', 'schema2')
+    global main_table2
+    main_table2 = config.get('DB_SCHEMA_TABLE', 'table2')
+    global schema_4_intermediate_table1
+    schema_4_intermediate_table1 = config.get('DB_SCHEMA_TABLE', 'intermediateTableSchema1')
+    global schoolwise_cnt_tbl_dsrd
+    schoolwise_cnt_tbl_dsrd = config.get('DB_SCHEMA_TABLE', 'intermediateCntTable1')
+    global schema_4_intermediate_table2
+    schema_4_intermediate_table2 = config.get('DB_SCHEMA_TABLE', 'intermediateTableSchema2')
+    global schoolwise_cnt_tbl_stipendInfo
+    schoolwise_cnt_tbl_stipendInfo = config.get('DB_SCHEMA_TABLE', 'intermediateCntTable2')
+    global same_cnt_table_schema
+    same_cnt_table_schema = config.get('DB_SCHEMA_TABLE', 'sameCntTableSchema')
+    global same_cnt_table
+    same_cnt_table = config.get('DB_SCHEMA_TABLE', 'sameCntTable')
+
+
+def get_reader():
+    config = configparser.ConfigParser()
+    config.sections()
+    config.read('config.ini')
+
+    return config
+
+
+def get_db_connection():
+    config = get_reader()
+    section = config.default_section
+
+    return MySQLdb.connect(config.get(section, 'db_ip'),
+                           config.get(section, 'db_user_name'),
+                           config.get(section, 'db_password'),
+                           config.get(section, 'db_schema'))
+
+
+def export(db_con):
+    cursor = db_con.cursor()
+    query = """
+        SELECT
+          sm.*,
+          sc1.distinctMobCount disMob1,
+          sc2.distinctMobCount disMob2,
+          100 * sm.same_mobile_no_count / sc1.distinctMobCount percentage1,
+          100 * sm.same_mobile_no_count / sc2.distinctMobCount percnetage2
+        FROM %s.%s sm
+          INNER JOIN %s.%s sc1 ON sm.school_code = sc1.school_code
+          INNER JOIN %s.%s sc2 ON sm.school_code = sc2.school_code
+        WHERE 100 * sm.same_mobile_no_count / sc1.distinctMobCount < 80
+              OR 100 * sm.same_mobile_no_count / sc2.distinctMobCount < 80
+
+        ORDER BY percentage1, percnetage2
+    """ % (same_cnt_table_schema, same_cnt_table, schema_4_intermediate_table1, schoolwise_cnt_tbl_dsrd,
+           schema_4_intermediate_table2, schoolwise_cnt_tbl_stipendInfo)
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    description = cursor.description
+    header = ()
+    for desc in description:
+        header = header + (desc[0],)
+    cursor.close()
+    if not os.path.exists('export'):
+        os.makedirs('export')
+    now = datetime.datetime.now().strftime("%y%m%d%H%M")
+    fp = open(os.path.join('export', 'duplicateList' + str(now) + '.csv'), 'wb')
+    myFile = csv.writer(fp)
+    myFile.writerow(header)
+    myFile.writerows(rows)
+    fp.close()
+
+    print "\nExported to CSV."
+
+
+def Main():
+    start_time = datetime.datetime.now()
+    db_con = get_db_connection()
+    set_schema_table_variables()
+    # create_intermediate_tables(db_con=db_con)
+    # schoolCode_rowCnt_map1 = get_schoolCode_rowCnt_map1(db_con=db_con)
+    # schoolCode_rowCnt_map2 = get_schoolCode_rowCnt_map2(db_con=db_con)
+    # create_same_cnt_table(db_con=db_con)
+    # school_code_list = first_db_school_code_fetch(db_con=db_con)
+    # perform_duplicate_check_and_insert_in_db(db_con=db_con,
+    #                                          schoolCode_list=school_code_list,
+    #                                          school_rowCntMap1=schoolCode_rowCnt_map1,
+    #                                          school_rowCntMap2=schoolCode_rowCnt_map2)
+    export(db_con=db_con)
+    end_time = datetime.datetime.now()
+    print "Total process took time: " + str(end_time - start_time)
+
+
+Main()
